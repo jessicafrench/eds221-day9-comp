@@ -16,16 +16,29 @@ Create a summary table of mean and standard dev maple seedling height in cm2 by 
 
 ```{r}
 hbr_summary <- hbr_maples |> 
-  group_by(year, watershed) |> 
-  summarize(mean_height = mean(stem_length, na.rm = TRUE),
-            sd_height = sd(stem_length, na.rm = TRUE))
+  group_by(watershed, year) |> 
+  summarize(mean_height = round(mean(stem_length, na.rm = TRUE), 1),
+            sd_height = round(sd(stem_length, na.rm = TRUE), 1))
 
 
 ```
 
 ```{r}
 hbr_summary |> 
-  kable()
+  kable(col.names = c("Watershed", 
+                      "Year", 
+                      "Mean Height (sq. cm)", 
+                      "SD seedling height (sq. cm)")) |> 
+  kable_styling(bootstrap_options = "striped") |> 
+  column_spec(1, bold = TRUE, background = "lightblue") |> 
+  add_header_above(c(" " = 2, "Seedling dimensions" = 2)) |> 
+  scroll_box(height = "50px", width = "200px")
 
 
+```
+
+```{r}
+hbr_summary |> 
+  kable() |> 
+  kable_classic(bootstrap_options = "striped")
 ```
