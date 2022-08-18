@@ -1,0 +1,31 @@
+---
+title: "Kable tables"
+format: html
+editor: visual
+---
+
+## 
+
+```{r}
+library(tidyverse)
+library(lterdatasampler)
+library(kableExtra)
+```
+
+Create a summary table of mean and standard dev maple seedling height in cm2 by watershed and year
+
+```{r}
+hbr_summary <- hbr_maples |> 
+  group_by(year, watershed) |> 
+  summarize(mean_height = mean(stem_length, na.rm = TRUE),
+            sd_height = sd(stem_length, na.rm = TRUE))
+
+
+```
+
+```{r}
+hbr_summary |> 
+  kable()
+
+
+```
